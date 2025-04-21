@@ -8,8 +8,11 @@ A tool for backtesting Uniswap v3 liquidity provision strategies using the Oku A
 - Backtest liquidity positions with historical data
 - Compare LP performance vs. HODL strategy
 - Analyze impermanent loss and fee earnings
+- Web UI for easier interaction (Next.js frontend)
 
 ## Quick Start
+
+### CLI Version
 
 1. **Install dependencies:**
    ```
@@ -21,14 +24,34 @@ A tool for backtesting Uniswap v3 liquidity provision strategies using the Oku A
    npm run build
    ```
 
-3. **Run the application:**
+3. **Run the CLI application:**
    ```
    npm start
    ```
 
+### Web UI Version
+
+1. **Navigate to the frontend directory:**
+   ```
+   cd frontend
+   ```
+
+2. **Install frontend dependencies:**
+   ```
+   npm install
+   ```
+
+3. **Start the development server:**
+   ```
+   npm run dev
+   ```
+
+4. **Open your browser:**
+   Navigate to http://localhost:3000
+
 ## How It Works
 
-The tool prompts you to:
+The tool allows you to:
 1. Select pools to analyze
 2. Choose a pool for backtesting
 3. Define price range and token amounts
@@ -41,6 +64,11 @@ Results include position values, impermanent loss, fee earnings, and profitabili
 
 - Node.js v14+
 - npm v6+
+
+## Project Structure
+
+- `/src` - CLI application source code
+- `/frontend` - Next.js web interface
 
 ## Notes
 

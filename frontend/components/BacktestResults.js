@@ -12,6 +12,7 @@ export default function BacktestResults({ results, token0, token1 }) {
   };
 
   // Extract relevant metrics
+  // Extract relevant metrics
   const {
     // Price data
     price_initial_quoted0,
@@ -25,7 +26,7 @@ export default function BacktestResults({ results, token0, token1 }) {
     amount0_final,
     amount1_final,
 
-    // Values and profits
+    // Values and profits for token0
     value_initial_quoted0,
     value_now_quoted0,
     value_if_held_quoted0,
@@ -33,6 +34,15 @@ export default function BacktestResults({ results, token0, token1 }) {
     fees_quoted0,
     net_profit_quoted0,
     return_proportion_quoted0,
+
+    // Values and profits for token1
+    value_initial_quoted1,
+    value_now_quoted1,
+    value_if_held_quoted1,
+    impermanent_loss_quoted1,
+    fees_quoted1,
+    net_profit_quoted1,
+    return_proportion_quoted1,
 
     // APRs
     position_fee_apr0,
@@ -42,12 +52,16 @@ export default function BacktestResults({ results, token0, token1 }) {
     backtest_start_time,
     backtest_end_time,
   } = results;
-
-  // Calculate some derived metrics
+  // Calculate some derived metrics for token0
   const returnPct = return_proportion_quoted0 * 100;
   const ilPct = value_if_held_quoted0 > 0 ? (impermanent_loss_quoted0 / value_if_held_quoted0) * 100 : 0;
   const feesPct = value_initial_quoted0 > 0 ? (fees_quoted0 / value_initial_quoted0) * 100 : 0;
   const pricePctChange = price_initial_quoted0 > 0 ? ((price_final_quoted0 / price_initial_quoted0) - 1) * 100 : 0;
+
+  // Calculate some derived metrics for token1
+  const returnPct1 = return_proportion_quoted1 * 100;
+  const ilPct1 = value_if_held_quoted1 > 0 ? (impermanent_loss_quoted1 / value_if_held_quoted1) * 100 : 0;
+  const feesPct1 = value_initial_quoted1 > 0 ? (fees_quoted1 / value_initial_quoted1) * 100 : 0;
 
   return (
     <div className="backtest-results">
@@ -113,6 +127,42 @@ export default function BacktestResults({ results, token0, token1 }) {
           <span>Net Profit:</span>
           <span className={getValueClass(net_profit_quoted0)}>
             {net_profit_quoted0?.toFixed(4)} {token0} ({formatWithSign(returnPct)}%)
+          </span>
+        </div>
+      </div>
+      
+      <div>
+        <h3>Performance Summary (in {token1})</h3>
+        <div className="metric-row">
+          <span>Initial Value:</span>
+          <span>{value_initial_quoted1?.toFixed(4)} {token1}</span>
+        </div>
+        <div className="metric-row">
+          <span>Final Value:</span>
+          <span className={getValueClass(returnPct1)}>
+            {value_now_quoted1?.toFixed(4)} {token1} ({formatWithSign(returnPct1)}%)
+          </span>
+        </div>
+        <div className="metric-row">
+          <span>If Held:</span>
+          <span>{value_if_held_quoted1?.toFixed(4)} {token1}</span>
+        </div>
+        <div className="metric-row">
+          <span>Impermanent Loss:</span>
+          <span className={getValueClass(-ilPct1)}>
+            {impermanent_loss_quoted1?.toFixed(4)} {token1} ({ilPct1.toFixed(2)}%)
+          </span>
+        </div>
+        <div className="metric-row">
+          <span>Fees Earned:</span>
+          <span className="positive">
+            {fees_quoted1?.toFixed(4)} {token1} ({feesPct1.toFixed(2)}%)
+          </span>
+        </div>
+        <div className="metric-row">
+          <span>Net Profit:</span>
+          <span className={getValueClass(net_profit_quoted1)}>
+            {net_profit_quoted1?.toFixed(4)} {token1} ({formatWithSign(returnPct1)}%)
           </span>
         </div>
       </div>
